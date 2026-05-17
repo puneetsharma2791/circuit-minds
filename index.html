@@ -16,11 +16,13 @@
   --teal-lt:  #b8e8d8;
   --gold:     #c8880a;
   --gold-lt:  #faebd0;
-  --cream:    #fdf9f2;
   --muted:    #6b7c76;
-  --border:   rgba(13,110,86,0.18);
-  --radius:   12px;
+  --border:   rgba(13,110,86,0.15);
+  --radius:   14px;
   --max:      1080px;
+  --shadow-sm: 0 2px 12px rgba(13,110,86,0.08);
+  --shadow-md: 0 8px 32px rgba(13,110,86,0.12);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -30,320 +32,569 @@ body{
   background:var(--paper);
   color:var(--ink);
   line-height:1.6;
+  overflow-x:hidden;
 }
 
 /* ── UTILS ── */
-.container{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:24px;}
+.container{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:28px;}
 
-.sec-head{
-  font-family:'Syne',sans-serif;
+.sec-label {
+  font-family:'Space Mono',monospace;
   font-size:10px;font-weight:700;
-  letter-spacing:3.5px;text-transform:uppercase;
+  letter-spacing:3px;text-transform:uppercase;
   color:var(--teal);
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:20px;
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:12px;
 }
-.sec-head::before{content:'';width:18px;height:2px;background:var(--gold);flex-shrink:0;}
-.sec-head::after{content:'';flex:1;height:1px;background:var(--border);}
+.sec-label::before{content:'';width:20px;height:2px;background:var(--gold);flex-shrink:0;}
+
+.sec-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,3.5vw,36px);font-weight:800;
+  color:var(--ink);line-height:1.1;
+  margin-bottom:10px;
+}
+.sec-sub{font-size:15px;color:var(--muted);line-height:1.75;max-width:560px;}
 
 /* ── NAV ── */
 .nav{
   position:sticky;top:0;z-index:100;
-  background:var(--ink);
-  border-bottom:2px solid var(--teal);
+  background:rgba(11,31,26,0.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(184,232,216,0.12);
 }
 .nav-inner{
   display:flex;align-items:center;justify-content:space-between;
-  padding:14px 24px;
+  padding:13px 28px;
   max-width:var(--max);margin-inline:auto;
 }
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-icon{
-  width:34px;height:34px;
-  background:rgba(255,255,255,0.08);
-  border-radius:8px;
+  width:36px;height:36px;
+  background:linear-gradient(135deg,var(--teal),var(--teal-mid));
+  border-radius:9px;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
+  box-shadow:0 0 0 1px rgba(184,232,216,0.2);
 }
 .nav-name{
   font-family:'Syne',sans-serif;
   font-size:15px;font-weight:800;
-  color:#fff;letter-spacing:1.5px;text-transform:uppercase;
+  color:#fff;letter-spacing:1px;text-transform:uppercase;
 }
-.nav-tag{font-size:9px;color:var(--teal-lt);letter-spacing:2px;text-transform:uppercase;margin-top:1px;}
+.nav-tag{font-size:9px;color:var(--teal-lt);letter-spacing:2px;text-transform:uppercase;margin-top:1px;opacity:0.8;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-link{
+  font-size:13px;color:rgba(255,255,255,0.65);
+  text-decoration:none;letter-spacing:0.2px;
+  transition:color 0.2s;
+}
+.nav-link:hover{color:#fff;}
 .nav-cta{
   background:var(--gold);color:#fff;
   font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
-  padding:9px 22px;border-radius:6px;
+  padding:9px 22px;border-radius:7px;
   text-decoration:none;letter-spacing:0.3px;
-  transition:opacity 0.2s;
+  transition:opacity 0.2s,transform 0.15s;
   white-space:nowrap;
 }
-.nav-cta:hover{opacity:0.88;}
+.nav-cta:hover{opacity:0.88;transform:translateY(-1px);}
 
 /* ── HERO ── */
 .hero{
-  background:var(--teal);
+  background:var(--ink);
   position:relative;overflow:hidden;
+  padding:88px 28px 0;
 }
+/* animated grid pattern */
 .hero::before{
   content:'';
   position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(184,232,216,0.18) 1px,transparent 1px);
-  background-size:28px 28px;
+  background-image:
+    linear-gradient(rgba(184,232,216,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(184,232,216,0.04) 1px,transparent 1px);
+  background-size:48px 48px;
   pointer-events:none;
 }
+/* radial glow */
 .hero::after{
-  content:'';display:block;
-  height:36px;
-  background:var(--paper);
-  clip-path:polygon(0 100%,100% 0,100% 100%);
+  content:'';
+  position:absolute;
+  top:-200px;left:-200px;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(13,110,86,0.35) 0%,transparent 65%);
+  pointer-events:none;
 }
 .hero-inner{
-  position:relative;z-index:1;
-  padding:72px 24px 48px;
+  position:relative;z-index:2;
   max-width:var(--max);margin-inline:auto;
-  display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+  display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:end;
 }
-.hero-eyebrow{
+.hero-content{padding-bottom:64px;}
+.hero-badge-top{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(184,232,216,0.08);
+  border:1px solid rgba(184,232,216,0.2);
+  border-radius:30px;
+  padding:6px 14px;
   font-family:'Space Mono',monospace;
   font-size:10px;color:var(--teal-lt);
-  letter-spacing:3px;text-transform:uppercase;
-  margin-bottom:14px;
-  display:flex;align-items:center;gap:12px;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:24px;
 }
-.hero-eyebrow::after{content:'';flex:1;height:1px;background:rgba(184,232,216,0.3);}
+.hero-badge-top .pulse{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--teal-mid);
+  animation:pulse 2s infinite;
+  flex-shrink:0;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(26,158,120,0.5);}
+  50%{opacity:0.8;box-shadow:0 0 0 6px rgba(26,158,120,0);}
+}
 .hero-title{
   font-family:'Syne',sans-serif;
-  font-size:clamp(32px,5vw,56px);font-weight:800;
-  color:#fff;line-height:1.05;
-  margin-bottom:18px;
+  font-size:clamp(36px,5.5vw,64px);font-weight:800;
+  color:#fff;line-height:1.0;
+  margin-bottom:20px;
 }
-.hero-title span{color:var(--gold-lt);display:block;}
+.hero-title .line2{
+  background:linear-gradient(90deg,var(--gold-lt),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;display:block;
+}
 .hero-sub{
-  font-size:16px;color:rgba(255,255,255,0.72);
-  font-weight:300;line-height:1.75;
-  max-width:520px;margin-bottom:32px;
+  font-size:16px;color:rgba(255,255,255,0.6);
+  font-weight:300;line-height:1.8;
+  max-width:480px;margin-bottom:36px;
 }
-.hero-cta{
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.btn-primary{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--gold);color:#fff;
-  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
-  padding:14px 32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold),#e09b12);
+  color:#fff;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  padding:15px 32px;border-radius:9px;
   text-decoration:none;letter-spacing:0.3px;
-  transition:transform 0.15s,opacity 0.15s;
+  box-shadow:0 4px 20px rgba(200,136,10,0.4);
+  transition:transform 0.15s,box-shadow 0.15s;
 }
-.hero-cta:hover{transform:translateY(-2px);opacity:0.92;}
-.hero-badge{
-  background:rgba(255,255,255,0.1);
-  border:1px solid rgba(255,255,255,0.2);
-  border-radius:16px;
-  padding:24px 28px;
-  text-align:center;
-  flex-shrink:0;
-  backdrop-filter:blur(4px);
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,136,10,0.5);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  color:rgba(255,255,255,0.7);font-size:14px;
+  text-decoration:none;
+  transition:color 0.2s;
 }
-.hero-badge-fee{
-  font-family:'Syne',sans-serif;
-  font-size:36px;font-weight:800;
-  color:var(--gold-lt);line-height:1;
+.btn-secondary:hover{color:#fff;}
+.btn-secondary svg{transition:transform 0.2s;}
+.btn-secondary:hover svg{transform:translateX(3px);}
+
+/* hero visual card */
+.hero-visual{
+  position:relative;z-index:2;
+  align-self:end;
 }
-.hero-badge-label{font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px;letter-spacing:1px;text-transform:uppercase;}
-.hero-badge-incl{
-  font-family:'Space Mono',monospace;
-  font-size:9px;color:var(--teal-lt);
-  margin-top:8px;letter-spacing:1px;
+.hero-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px 20px 0 0;
+  padding:28px 28px 32px;
+  backdrop-filter:blur(8px);
+}
+.hero-card-title{
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  color:var(--teal-lt);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:20px;display:flex;align-items:center;gap:8px;
+}
+.hero-card-title::after{content:'';flex:1;height:1px;background:rgba(184,232,216,0.15);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+.stat{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;padding:14px 16px;
+}
+.stat-val{
+  font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;line-height:1;
+  margin-bottom:4px;
+}
+.stat-val.gold{color:var(--gold-lt);}
+.stat-key{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:1px;text-transform:uppercase;}
+.hero-card-cta{
+  display:block;
+  background:linear-gradient(135deg,var(--teal),var(--teal-mid));
+  color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  padding:13px;border-radius:8px;text-align:center;text-decoration:none;
+  letter-spacing:0.3px;
+  transition:opacity 0.2s;
+}
+.hero-card-cta:hover{opacity:0.88;}
+
+/* wave divider */
+.wave-divider{
+  display:block;
+  background:var(--paper);
+  height:56px;
+  clip-path:ellipse(55% 100% at 50% 100%);
+  margin-top:-1px;
 }
 
-/* ── DETAILS STRIP ── */
-.strip{
+/* ── STATS BAR ── */
+.stats-bar{
   background:#fff;
-  border-bottom:2px solid var(--border);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-sm);
 }
-.strip-inner{
+.stats-inner{
   display:flex;flex-wrap:wrap;
   max-width:var(--max);margin-inline:auto;
-  border-left:1px solid var(--border);
 }
-.strip-cell{
-  flex:1;min-width:160px;
-  padding:20px 24px;
+.stat-cell{
+  flex:1;min-width:150px;
+  padding:22px 24px;
   border-right:1px solid var(--border);
-  border-top:1px solid var(--border);
   display:flex;align-items:center;gap:14px;
+  transition:background 0.2s;
 }
-.strip-icon{font-size:24px;flex-shrink:0;}
-.strip-key{
+.stat-cell:last-child{border-right:none;}
+.stat-cell:hover{background:#fafaf8;}
+.stat-cell-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.stat-cell-icon.teal{background:linear-gradient(135deg,#e4f5ee,#c8eedf);}
+.stat-cell-icon.gold{background:linear-gradient(135deg,var(--gold-lt),#f5dba0);}
+.stat-cell-key{
   font-family:'Space Mono',monospace;
   font-size:8px;letter-spacing:2px;text-transform:uppercase;
   color:var(--muted);margin-bottom:3px;
 }
-.strip-val{
+.stat-cell-val{
   font-family:'Syne',sans-serif;
   font-size:15px;font-weight:700;color:var(--ink);
 }
-.strip-val.gold{color:var(--gold);}
-.strip-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.stat-cell-val.gold{color:var(--gold);}
+.stat-cell-sub{font-size:11px;color:var(--muted);margin-top:1px;}
 
-/* ── LEARN ── */
-.section{padding:64px 24px;}
+/* ── SECTIONS ── */
+.section{padding:80px 0;}
+.section-alt{background:#fff;}
+.section-dark{background:var(--ink);}
+.section-teal{background:var(--teal);}
+
+/* ── HOW IT WORKS ── */
+.steps-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;
+  position:relative;
+  margin-top:40px;
+}
+.steps-grid::before{
+  content:'';
+  position:absolute;
+  top:36px;left:calc(16.67% + 20px);right:calc(16.67% + 20px);
+  height:2px;
+  background:linear-gradient(90deg,var(--teal-mid),var(--gold));
+  z-index:0;
+}
+.step{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:0 24px;
+}
+.step-num{
+  width:72px;height:72px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:26px;font-weight:800;
+  margin-bottom:20px;
+  border:3px solid #fff;
+  box-shadow:var(--shadow-md);
+  flex-shrink:0;
+}
+.step-num.s1{background:linear-gradient(135deg,var(--teal),var(--teal-mid));color:#fff;}
+.step-num.s2{background:linear-gradient(135deg,var(--gold),#e09b12);color:#fff;}
+.step-num.s3{background:linear-gradient(135deg,#1a9e78,#0d6e56);color:#fff;}
+.step h4{
+  font-family:'Syne',sans-serif;font-size:17px;font-weight:700;
+  color:var(--ink);margin-bottom:8px;
+}
+.step p{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* ── LEARN GRID ── */
 .learn-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:18px;margin-top:36px;
 }
 .learn-card{
   background:#fff;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:20px 22px;
-  display:flex;gap:16px;align-items:flex-start;
+  padding:24px 26px;
+  display:flex;gap:18px;align-items:flex-start;
   position:relative;overflow:hidden;
-  transition:box-shadow 0.2s,transform 0.2s;
+  transition:box-shadow 0.25s,transform 0.25s;
+  box-shadow:var(--shadow-sm);
 }
-.learn-card:hover{box-shadow:0 6px 28px rgba(13,110,86,0.12);transform:translateY(-2px);}
+.learn-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);}
 .learn-card::before{
   content:'';
   position:absolute;left:0;top:0;bottom:0;
-  width:4px;background:var(--teal-mid);
+  width:4px;background:linear-gradient(180deg,var(--teal-mid),var(--teal));
+  border-radius:4px 0 0 4px;
 }
-.learn-card:nth-child(even)::before{background:var(--gold);}
+.learn-card:nth-child(even)::before{background:linear-gradient(180deg,var(--gold),#e09b12);}
 .learn-num{
   font-family:'Space Mono',monospace;
-  font-size:26px;font-weight:700;
+  font-size:28px;font-weight:700;
   color:var(--teal-lt);line-height:1;flex-shrink:0;margin-top:2px;
 }
 .learn-card:nth-child(even) .learn-num{color:#f5dba8;}
 .learn-body h4{
   font-family:'Syne',sans-serif;
-  font-size:15px;font-weight:700;
-  color:var(--ink);margin-bottom:8px;
+  font-size:16px;font-weight:700;
+  color:var(--ink);margin-bottom:10px;
 }
 .learn-body ul{list-style:none;}
 .learn-body ul li{
   font-size:13px;color:var(--muted);
-  line-height:1.7;padding-left:16px;position:relative;
+  line-height:1.75;padding-left:18px;position:relative;
 }
 .learn-body ul li::before{
   content:'→';position:absolute;left:0;
-  color:var(--teal-mid);font-size:11px;top:1px;
+  color:var(--teal-mid);font-size:11px;top:2px;
 }
 .learn-card:nth-child(even) .learn-body ul li::before{color:var(--gold);}
 
 /* ── TAKEAWAYS ── */
-.section-alt{background:var(--teal);padding:56px 24px;}
-.section-alt .sec-head{color:var(--teal-lt);}
-.section-alt .sec-head::before{background:var(--gold-lt);}
-.section-alt .sec-head::after{background:rgba(184,232,216,0.3);}
-.takeaway-row{display:flex;gap:12px;flex-wrap:wrap;}
+.takeaway-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
 .takeaway{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.2);
-  color:#fff;border-radius:30px;
-  padding:10px 20px;
+  display:flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.18);
+  color:#fff;border-radius:40px;
+  padding:11px 22px;
   font-size:14px;font-weight:500;
-  backdrop-filter:blur(2px);
+  backdrop-filter:blur(4px);
+  transition:background 0.2s;
 }
+.takeaway:hover{background:rgba(255,255,255,0.16);}
 .takeaway .dot{width:7px;height:7px;border-radius:50%;background:var(--teal-lt);flex-shrink:0;}
 
 /* ── INSTRUCTORS ── */
-.instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px;}
 .instr-card{
-  background:#fff;
+  background:var(--paper);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:28px;
+  padding:32px;
   position:relative;overflow:hidden;
-  transition:box-shadow 0.2s;
+  transition:box-shadow 0.25s,transform 0.25s;
+  box-shadow:var(--shadow-sm);
 }
-.instr-card:hover{box-shadow:0 8px 32px rgba(13,110,86,0.12);}
+.instr-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);}
 .instr-card::after{
   content:'';
   position:absolute;bottom:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--teal-mid),var(--gold));
 }
-.instr-top{display:flex;align-items:center;gap:16px;margin-bottom:14px;}
+.instr-top{display:flex;align-items:center;gap:18px;margin-bottom:16px;}
 .instr-av{
-  width:56px;height:56px;border-radius:50%;
+  width:60px;height:60px;border-radius:50%;
   background:linear-gradient(135deg,var(--teal),var(--teal-mid));
   display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;
-  flex-shrink:0;border:2px solid var(--gold-lt);
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;
+  flex-shrink:0;
+  box-shadow:0 0 0 4px var(--gold-lt), 0 4px 16px rgba(13,110,86,0.2);
 }
-.instr-meta h4{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.instr-meta h4{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:3px;}
 .instr-degree{
   font-family:'Space Mono',monospace;font-size:10px;
   color:var(--teal);letter-spacing:0.5px;text-transform:uppercase;
 }
-.instr-bio{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:14px;}
-.instr-chips{display:flex;gap:6px;flex-wrap:wrap;}
-.chip{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:500;}
-.chip.teal{background:#e4f5ee;color:#085041;}
+.instr-bio{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.instr-chips{display:flex;gap:7px;flex-wrap:wrap;}
+.chip{font-size:11px;padding:5px 13px;border-radius:20px;font-weight:600;letter-spacing:0.2px;}
+.chip.teal{background:#d8f2e8;color:#085041;}
 .chip.gold{background:var(--gold-lt);color:#7a4e04;}
 
 /* ── WHO ATTENDS ── */
-.attend-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.attend-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;}
 .attend-item{
   display:flex;align-items:flex-start;gap:12px;
-  padding:16px 18px;
-  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 20px;
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius);
+  transition:box-shadow 0.2s,transform 0.2s;
+  box-shadow:var(--shadow-sm);
 }
+.attend-item:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
 .attend-tick{
-  width:22px;height:22px;border-radius:50%;
-  background:var(--teal);
+  width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--teal-mid));
   display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:11px;flex-shrink:0;margin-top:1px;
+  box-shadow:0 2px 8px rgba(13,110,86,0.25);
 }
 .attend-text{font-size:14px;color:var(--ink);line-height:1.5;}
 
-/* ── REGISTRATION SECTION ── */
-.reg-section{
-  background:var(--ink);padding:72px 24px;
+/* ── PAYMENT SECTION ── */
+.payment-section{
+  background:linear-gradient(160deg,#0d1f1b 0%,#0b2a22 100%);
+  padding:80px 0;
+  position:relative;overflow:hidden;
 }
-.reg-inner{
-  max-width:var(--max);margin-inline:auto;
-  display:grid;grid-template-columns:1fr 1.6fr;gap:56px;align-items:start;
+.payment-section::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(184,232,216,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(184,232,216,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
 }
-.reg-left{color:#fff;}
-.reg-eyebrow{
-  font-family:'Space Mono',monospace;
-  font-size:9px;color:var(--teal-lt);
-  letter-spacing:3px;text-transform:uppercase;
-  margin-bottom:16px;display:flex;align-items:center;gap:10px;
+.payment-inner{
+  position:relative;z-index:1;
+  max-width:var(--max);margin-inline:auto;padding-inline:28px;
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
 }
-.reg-eyebrow::after{content:'';flex:1;height:1px;background:rgba(184,232,216,0.25);}
-.reg-title{
-  font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,38px);font-weight:800;
+.payment-left .sec-label{color:var(--teal-lt);}
+.payment-left .sec-label::before{background:var(--gold-lt);}
+.payment-title{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,40px);font-weight:800;
   color:#fff;line-height:1.1;margin-bottom:16px;
 }
-.reg-title em{color:var(--gold-lt);font-style:normal;}
-.reg-desc{font-size:14px;color:rgba(255,255,255,0.62);line-height:1.8;margin-bottom:28px;}
-.reg-meta{display:flex;flex-direction:column;gap:14px;}
-.reg-meta-item{display:flex;align-items:center;gap:12px;}
-.reg-meta-icon{font-size:18px;flex-shrink:0;}
-.reg-meta-txt{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#fff;}
-.reg-meta-sub{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:1px;text-transform:uppercase;}
-.fee-pill-hero{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--gold);border-radius:30px;
-  padding:8px 22px;
-  font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff;
-  margin-top:24px;
+.payment-title em{color:var(--gold-lt);font-style:normal;}
+.payment-desc{font-size:15px;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:32px;}
+.payment-steps{display:flex;flex-direction:column;gap:16px;}
+.pay-step{display:flex;align-items:flex-start;gap:14px;}
+.pay-step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--teal);border:1px solid rgba(184,232,216,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#fff;
+  flex-shrink:0;
 }
-.fee-pill-hero span{font-size:11px;opacity:0.8;font-family:'DM Sans',sans-serif;font-weight:400;}
+.pay-step-body h5{
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;
+}
+.pay-step-body p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;}
+.pay-step-body code{
+  font-family:'Space Mono',monospace;font-size:12px;
+  background:rgba(200,136,10,0.2);color:var(--gold-lt);
+  padding:1px 6px;border-radius:4px;border:1px solid rgba(200,136,10,0.3);
+}
 
-/* ── FORM ── */
+/* QR card */
+.qr-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:20px;
+  padding:32px;
+  text-align:center;
+  backdrop-filter:blur(8px);
+}
+.qr-label{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--teal-lt);letter-spacing:2.5px;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.qr-sublabel{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;
+  margin-bottom:24px;
+}
+.qr-frame{
+  background:#fff;
+  border-radius:16px;
+  padding:12px;
+  display:inline-block;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+  margin-bottom:20px;
+}
+.qr-frame img{
+  width:200px;height:auto;
+  display:block;
+  border-radius:6px;
+}
+.qr-amount{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);
+  border-radius:30px;padding:8px 24px;
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;
+  margin-bottom:10px;
+  box-shadow:0 4px 16px rgba(200,136,10,0.4);
+}
+.qr-name{
+  font-size:12px;color:rgba(255,255,255,0.5);
+  letter-spacing:1px;text-transform:uppercase;
+  font-family:'Space Mono',monospace;
+}
+.qr-note{
+  margin-top:16px;
+  font-size:11px;color:rgba(255,255,255,0.35);
+  line-height:1.7;font-style:italic;
+}
+
+/* ── REGISTRATION FORM ── */
+.reg-section{
+  background:var(--paper);padding:80px 0;
+}
+.reg-inner{
+  max-width:var(--max);margin-inline:auto;padding-inline:28px;
+  display:grid;grid-template-columns:1fr 1.55fr;gap:60px;align-items:start;
+}
+.reg-left .sec-label{display:block;}
+.reg-title{
+  font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,40px);font-weight:800;
+  color:var(--ink);line-height:1.1;margin-bottom:14px;
+}
+.reg-title em{color:var(--teal);font-style:normal;}
+.reg-desc{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:28px;}
+.reg-meta{display:flex;flex-direction:column;gap:14px;margin-bottom:28px;}
+.reg-meta-item{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  box-shadow:var(--shadow-sm);
+}
+.reg-meta-icon{font-size:20px;flex-shrink:0;}
+.reg-meta-txt{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--ink);}
+.reg-meta-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.fee-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--gold),#e09b12);
+  border-radius:30px;
+  padding:10px 24px;
+  font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:#fff;
+  box-shadow:0 4px 16px rgba(200,136,10,0.35);
+}
+.fee-pill span{font-size:12px;opacity:0.85;font-family:'DM Sans',sans-serif;font-weight:400;}
+
+/* Form */
 .reg-form{
-  background:#fff;border-radius:16px;padding:40px 36px;
-  box-shadow:0 16px 64px rgba(0,0,0,0.3);
+  background:#fff;
+  border-radius:20px;
+  padding:40px 38px;
+  box-shadow:0 20px 60px rgba(13,110,86,0.1), 0 1px 0 rgba(13,110,86,0.08);
+  border:1px solid var(--border);
+}
+.form-header{
+  display:flex;align-items:center;gap:14px;
+  padding-bottom:24px;border-bottom:1px solid var(--border);
+  margin-bottom:28px;
+}
+.form-header-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,var(--teal),var(--teal-mid));
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
 }
 .form-title{
   font-family:'Syne',sans-serif;font-size:20px;font-weight:800;
-  color:var(--ink);margin-bottom:6px;
+  color:var(--ink);margin-bottom:3px;
 }
-.form-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-sub-text{font-size:12px;color:var(--muted);}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .form-group{display:flex;flex-direction:column;gap:6px;}
 .form-group.full{grid-column:1/-1;}
 .form-group label{
@@ -357,102 +608,182 @@ body{
 .form-group select,
 .form-group textarea{
   font-family:'DM Sans',sans-serif;font-size:14px;
-  padding:11px 14px;
-  border:1.5px solid #dde6e3;border-radius:8px;
-  color:var(--ink);background:#fff;
-  outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+  padding:12px 15px;
+  border:1.5px solid #dde6e3;border-radius:9px;
+  color:var(--ink);background:#fafcfb;
+  outline:none;transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
   width:100%;
+  -webkit-appearance:none;
 }
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus{
   border-color:var(--teal-mid);
-  box-shadow:0 0 0 3px rgba(26,158,120,0.12);
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(26,158,120,0.1);
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder{color:#b0bfbb;}
-.form-group .helper{
-  font-size:11px;color:var(--muted);line-height:1.6;margin-top:2px;
+
+/* file upload */
+.file-upload-label{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;
+  padding:24px 20px;
+  border:2px dashed #c8ddd8;border-radius:10px;
+  background:#fafcfb;
+  cursor:pointer;
+  transition:border-color 0.2s,background 0.2s;
+  text-align:center;
 }
-.form-group .helper strong{color:var(--gold);font-weight:600;}
-.form-group .helper code{
+.file-upload-label:hover{border-color:var(--teal-mid);background:#f0faf6;}
+.file-upload-label.has-file{border-color:var(--teal-mid);background:#f0faf6;}
+.file-upload-icon{font-size:28px;}
+.file-upload-text{font-size:13px;color:var(--muted);line-height:1.5;}
+.file-upload-text strong{color:var(--teal);font-weight:600;}
+.file-upload-size{font-size:10px;color:#a0b0ab;margin-top:2px;}
+.file-name-display{
+  font-size:11px;color:var(--teal);font-weight:600;
+  margin-top:4px;display:none;
+}
+.form-group input[type="file"]{display:none;}
+
+.payment-ref-box{
+  background:linear-gradient(135deg,#f0faf6,#e8f7f1);
+  border:1.5px solid var(--teal-lt);
+  border-radius:10px;padding:16px 18px;
+  margin-bottom:6px;
+}
+.payment-ref-label{
+  font-family:'Space Mono',monospace;
+  font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--teal);margin-bottom:8px;
+}
+.payment-ref-box input{
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:11px 14px;
+  border:1.5px solid #c0ddd5;border-radius:8px;
+  color:var(--ink);background:#fff;
+  outline:none;width:100%;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.payment-ref-box input:focus{
+  border-color:var(--teal-mid);
+  box-shadow:0 0 0 4px rgba(26,158,120,0.1);
+}
+.payment-ref-box input::placeholder{color:#b0bfbb;}
+.payment-ref-hint{
+  font-size:12px;color:var(--muted);line-height:1.65;margin-top:8px;
+  display:flex;gap:6px;align-items:flex-start;
+}
+.payment-ref-hint::before{content:'💡';font-size:13px;flex-shrink:0;margin-top:1px;}
+
+.form-divider{
+  grid-column:1/-1;
+  display:flex;align-items:center;gap:12px;
+  color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;
+}
+.form-divider::before,.form-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.form-submit{
+  grid-column:1/-1;
+  background:linear-gradient(135deg,var(--teal),var(--teal-mid));
+  color:#fff;
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  padding:16px;border:none;border-radius:10px;
+  cursor:pointer;letter-spacing:0.4px;
+  transition:opacity 0.2s,transform 0.15s,box-shadow 0.15s;
+  box-shadow:0 4px 16px rgba(13,110,86,0.3);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.form-submit:hover{opacity:0.92;transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,110,86,0.4);}
+.form-submit:active{transform:translateY(0);}
+
+/* thank you */
+#thank-you{
+  display:none;
+  grid-column:1/-1;
+  background:linear-gradient(135deg,#e4f5ee,#d0efe3);
+  border:1.5px solid var(--teal-mid);
+  border-radius:12px;padding:24px 26px;
+  text-align:center;
+}
+#thank-you.visible{display:block;}
+#thank-you h3{
+  font-family:'Syne',sans-serif;font-size:20px;color:var(--teal);
+  margin-bottom:8px;font-weight:800;
+}
+#thank-you p{font-size:13px;color:var(--muted);line-height:1.7;}
+#thank-you .thank-you-icon{font-size:36px;margin-bottom:12px;display:block;}
+
+/* helper text */
+.helper{font-size:11px;color:var(--muted);line-height:1.65;margin-top:4px;}
+.helper strong{color:var(--gold);font-weight:600;}
+.helper code{
   font-family:'Space Mono',monospace;font-size:10px;
   background:var(--gold-lt);color:#7a4e04;
   padding:1px 5px;border-radius:3px;
 }
-.form-divider{
-  grid-column:1/-1;
-  border:none;border-top:1px solid var(--border);
-  margin:4px 0;
-}
-.form-submit{
-  grid-column:1/-1;
-  background:var(--teal);color:#fff;
-  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
-  padding:15px;border:none;border-radius:8px;
-  cursor:pointer;letter-spacing:0.4px;
-  transition:background 0.2s,transform 0.15s;
-}
-.form-submit:hover{background:var(--teal-mid);transform:translateY(-1px);}
-.form-submit:active{transform:translateY(0);}
-
-/* ── THANK YOU BANNER ── */
-#thank-you{
-  display:none;
-  grid-column:1/-1;
-  background:#e4f5ee;border:1.5px solid var(--teal-mid);
-  border-radius:10px;padding:20px 22px;
-  text-align:center;
-}
-#thank-you.visible{display:block;}
-#thank-you h3{font-family:'Syne',sans-serif;font-size:18px;color:var(--teal);margin-bottom:6px;}
-#thank-you p{font-size:13px;color:var(--muted);}
 
 /* ── FOOTER ── */
 footer{
   background:var(--ink);
-  border-top:2px solid var(--teal);
-  padding:28px 24px;
+  border-top:2px solid rgba(26,158,120,0.3);
+  padding:32px 28px;
 }
 .foot-inner{
   max-width:var(--max);margin-inline:auto;
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
 }
 .foot-brand{
-  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:800;
   color:var(--teal-lt);letter-spacing:1.5px;text-transform:uppercase;
 }
-.foot-tagline{font-size:11px;color:rgba(255,255,255,0.3);font-style:italic;}
+.foot-tagline{font-size:11px;color:rgba(255,255,255,0.28);font-style:italic;}
 .foot-dots{display:flex;gap:6px;align-items:center;}
 .fd{width:8px;height:8px;border-radius:50%;}
 
+/* ── SCROLL REVEAL ── */
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.reveal.visible{opacity:1;transform:none;}
+
 /* ── RESPONSIVE ── */
-@media(max-width:700px){
-  .hero-inner{grid-template-columns:1fr;gap:24px;}
-  .hero-badge{display:none;}
-  .learn-grid{grid-template-columns:1fr;}
+@media(max-width:860px){
+  .hero-inner{grid-template-columns:1fr;gap:32px;}
+  .hero-visual{display:none;}
+  .steps-grid::before{display:none;}
+  .steps-grid{grid-template-columns:1fr;gap:32px;}
+  .step{flex-direction:row;text-align:left;gap:16px;align-items:flex-start;}
+  .step-num{width:52px;height:52px;font-size:20px;flex-shrink:0;margin-bottom:0;}
   .instr-grid{grid-template-columns:1fr;}
-  .attend-grid{grid-template-columns:1fr 1fr;}
-  .reg-inner{grid-template-columns:1fr;gap:32px;}
+  .payment-inner{grid-template-columns:1fr;gap:40px;}
+  .reg-inner{grid-template-columns:1fr;gap:36px;}
   .form-grid{grid-template-columns:1fr;}
   .form-group.full{grid-column:1;}
   .form-divider{grid-column:1;}
   .form-submit{grid-column:1;}
   #thank-you{grid-column:1;}
-  .reg-form{padding:28px 20px;}
-  .strip-inner{flex-direction:column;}
-  .strip-cell{min-width:100%;border-right:none;border-top:1px solid var(--border);}
-  .attend-grid{grid-template-columns:1fr;}
+  .reg-form{padding:28px 22px;}
+  .attend-grid{grid-template-columns:1fr 1fr;}
 }
-@media(max-width:440px){
+@media(max-width:600px){
+  .stats-inner{flex-direction:column;}
+  .stat-cell{border-right:none;border-bottom:1px solid var(--border);}
+  .stat-cell:last-child{border-bottom:none;}
+  .learn-grid{grid-template-columns:1fr;}
   .attend-grid{grid-template-columns:1fr;}
-  .nav-cta{display:none;}
+  .nav-links{display:none;}
+  .hero{padding:64px 20px 0;}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ══ NAV ══ -->
 <nav class="nav" id="top">
   <div class="nav-inner">
     <a href="#top" class="nav-brand">
@@ -475,94 +806,166 @@ footer{
         <div class="nav-tag">Hands-on STEM Workshops</div>
       </div>
     </a>
-    <a href="#register" class="nav-cta">Register Now</a>
+    <div class="nav-links">
+      <a href="#learn" class="nav-link">Curriculum</a>
+      <a href="#instructors" class="nav-link">Instructors</a>
+      <a href="#payment" class="nav-link">Payment</a>
+    </div>
+    <a href="#register" class="nav-cta">Register Now →</a>
   </div>
 </nav>
 
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-inner">
-    <div>
-      <div class="hero-eyebrow">Hands-on Robotics Workshop &nbsp;·&nbsp; Batch 01 · 2026</div>
+
+    <div class="hero-content">
+      <div class="hero-badge-top">
+        <span class="pulse"></span>
+        Batch 01 · 2026 &nbsp;·&nbsp; Limited Seats
+      </div>
       <h1 class="hero-title">
         Build Your Own
-        <span>Obstacle Avoidance Robot Car</span>
+        <span class="line2">Robot Car</span>
       </h1>
       <p class="hero-sub">
-        A 3-day intensive where you go from zero to a fully working autonomous robot —
-        wiring real circuits, writing Arduino code, and watching your car navigate obstacles on its own.
+        A 3-day hands-on workshop for students aged 13–17. Wire real circuits,
+        write Arduino code, and watch your car dodge obstacles — all on your own.
       </p>
-      <a href="#register" class="hero-cta">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Reserve Your Seat
-      </a>
+      <div class="hero-actions">
+        <a href="#register" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Reserve Your Seat
+        </a>
+        <a href="#learn" class="btn-secondary">
+          See curriculum
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
     </div>
-    <div class="hero-badge" aria-hidden="true">
-      <div class="hero-badge-fee">₹2,100</div>
-      <div class="hero-badge-label">Workshop Fee</div>
-      <div class="hero-badge-incl">Kit &amp; Certificate Included</div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-title">Workshop at a glance</div>
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-val">3</div>
+            <div class="stat-key">Days</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">2hrs</div>
+            <div class="stat-key">Per day</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val gold">₹2,100</div>
+            <div class="stat-key">All inclusive</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">13–17</div>
+            <div class="stat-key">Age group</div>
+          </div>
+        </div>
+        <a href="#register" class="hero-card-cta">Register &amp; Pay Now</a>
+      </div>
     </div>
+
   </div>
+  <div class="wave-divider" aria-hidden="true"></div>
 </section>
 
 
-<!-- DETAILS STRIP -->
-<div class="strip" role="region" aria-label="Workshop details">
-  <div class="strip-inner">
-    <div class="strip-cell">
-      <div class="strip-icon" aria-hidden="true">📅</div>
+<!-- ══ STATS BAR ══ -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-cell reveal">
+      <div class="stat-cell-icon teal">📅</div>
       <div>
-        <div class="strip-key">Dates</div>
-        <div class="strip-val">Thu · Fri · Sat</div>
-        <div class="strip-sub">20 · 21 · 22 May 2026</div>
+        <div class="stat-cell-key">Dates</div>
+        <div class="stat-cell-val">Thu · Fri · Sat</div>
+        <div class="stat-cell-sub">20 · 21 · 22 May 2026</div>
       </div>
     </div>
-    <div class="strip-cell">
-      <div class="strip-icon" aria-hidden="true">⏰</div>
+    <div class="stat-cell reveal">
+      <div class="stat-cell-icon teal">⏰</div>
       <div>
-        <div class="strip-key">Timing</div>
-        <div class="strip-val">4:30 – 6:30 PM</div>
-        <div class="strip-sub">2 hours per day</div>
+        <div class="stat-cell-key">Timing</div>
+        <div class="stat-cell-val">4:30 – 6:30 PM</div>
+        <div class="stat-cell-sub">2 hours per day</div>
       </div>
     </div>
-    <div class="strip-cell">
-      <div class="strip-icon" aria-hidden="true">🏫</div>
+    <div class="stat-cell reveal">
+      <div class="stat-cell-icon teal">🏫</div>
       <div>
-        <div class="strip-key">Venue</div>
-        <div class="strip-val">Circuit Minds Lab</div>
-        <div class="strip-sub">Contact us for address</div>
+        <div class="stat-cell-key">Venue</div>
+        <div class="stat-cell-val">Circuit Minds Lab</div>
+        <div class="stat-cell-sub">Contact us for address</div>
       </div>
     </div>
-    <div class="strip-cell">
-      <div class="strip-icon" aria-hidden="true">👥</div>
+    <div class="stat-cell reveal">
+      <div class="stat-cell-icon teal">👥</div>
       <div>
-        <div class="strip-key">Age Group</div>
-        <div class="strip-val">13 – 17 yrs</div>
-        <div class="strip-sub">All levels welcome</div>
+        <div class="stat-cell-key">Age Group</div>
+        <div class="stat-cell-val">13 – 17 yrs</div>
+        <div class="stat-cell-sub">All levels welcome</div>
       </div>
     </div>
-    <div class="strip-cell">
-      <div class="strip-icon" aria-hidden="true">💰</div>
+    <div class="stat-cell reveal">
+      <div class="stat-cell-icon gold">💰</div>
       <div>
-        <div class="strip-key">Workshop Fee</div>
-        <div class="strip-val gold">₹ 2,100</div>
-        <div class="strip-sub">Kit &amp; certificate included</div>
+        <div class="stat-cell-key">Workshop Fee</div>
+        <div class="stat-cell-val gold">₹ 2,100</div>
+        <div class="stat-cell-sub">Kit &amp; certificate included</div>
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- WHAT YOU'LL LEARN -->
+<!-- ══ HOW IT WORKS ══ -->
+<section class="section section-alt" id="how">
+  <div class="container">
+    <div class="sec-label">How to Join</div>
+    <h2 class="sec-title">3 Simple Steps to Secure Your Spot</h2>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num s1">1</div>
+        <div>
+          <h4>Scan &amp; Pay</h4>
+          <p>Scan the PhonePe QR below and transfer ₹2,100 to confirm your seat. The QR is linked to Vinay Kumari's account.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num s2">2</div>
+        <div>
+          <h4>Fill the Form</h4>
+          <p>Complete the registration form with student details and your payment transaction reference number.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num s3">3</div>
+        <div>
+          <h4>Get Confirmed</h4>
+          <p>We verify your payment and send a confirmation on WhatsApp / email within 24 hours. See you at the workshop!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ WHAT YOU'LL LEARN ══ -->
 <section class="section" id="learn">
   <div class="container">
-    <div class="sec-head">What You Will Learn</div>
+    <div class="sec-label">Curriculum</div>
+    <h2 class="sec-title">What You Will Learn</h2>
+    <p class="sec-sub">Hands-on modules across 3 days — from building the chassis to programming autonomous obstacle avoidance.</p>
     <div class="learn-grid">
-
-      <div class="learn-card">
+      <div class="learn-card reveal">
         <div class="learn-num">01</div>
         <div class="learn-body">
           <h4>Robot Car Assembly</h4>
@@ -573,8 +976,7 @@ footer{
           </ul>
         </div>
       </div>
-
-      <div class="learn-card">
+      <div class="learn-card reveal">
         <div class="learn-num">02</div>
         <div class="learn-body">
           <h4>Circuits &amp; Electronics</h4>
@@ -585,8 +987,7 @@ footer{
           </ul>
         </div>
       </div>
-
-      <div class="learn-card">
+      <div class="learn-card reveal">
         <div class="learn-num">03</div>
         <div class="learn-body">
           <h4>Arduino Programming</h4>
@@ -597,8 +998,7 @@ footer{
           </ul>
         </div>
       </div>
-
-      <div class="learn-card">
+      <div class="learn-card reveal">
         <div class="learn-num">04</div>
         <div class="learn-body">
           <h4>Sensors &amp; Automation</h4>
@@ -609,37 +1009,44 @@ footer{
           </ul>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
 
-<!-- WHAT YOU TAKE HOME -->
-<section class="section-alt" id="takeaways">
+<!-- ══ TAKEAWAYS ══ -->
+<section class="section section-teal">
   <div class="container">
-    <div class="sec-head">What You Take Home</div>
+    <div class="sec-label" style="color:var(--teal-lt);">
+      <span style="display:inline-flex;align-items:center;gap:10px;">
+        <span style="width:20px;height:2px;background:var(--gold-lt);display:inline-block;"></span>
+        What You Take Home
+      </span>
+    </div>
+    <h2 class="sec-title" style="color:#fff;margin-top:6px;">Everything You Need to Keep Building</h2>
     <div class="takeaway-row">
-      <div class="takeaway"><div class="dot"></div> Your own robot car</div>
-      <div class="takeaway"><div class="dot"></div> Arduino starter kit</div>
-      <div class="takeaway"><div class="dot"></div> Certificate of completion</div>
-      <div class="takeaway"><div class="dot"></div> Full project source code</div>
-      <div class="takeaway"><div class="dot"></div> 3 days of hands-on learning</div>
-      <div class="takeaway"><div class="dot"></div> Access to instructor support</div>
+      <div class="takeaway reveal"><div class="dot"></div> Your own robot car</div>
+      <div class="takeaway reveal"><div class="dot"></div> Arduino starter kit</div>
+      <div class="takeaway reveal"><div class="dot"></div> Certificate of completion</div>
+      <div class="takeaway reveal"><div class="dot"></div> Full project source code</div>
+      <div class="takeaway reveal"><div class="dot"></div> 3 days of hands-on learning</div>
+      <div class="takeaway reveal"><div class="dot"></div> Instructor support access</div>
     </div>
   </div>
 </section>
 
 
-<!-- INSTRUCTORS -->
-<section class="section" id="instructors" style="background:#fff;">
+<!-- ══ INSTRUCTORS ══ -->
+<section class="section section-alt" id="instructors">
   <div class="container">
-    <div class="sec-head">Meet Your Instructors</div>
+    <div class="sec-label">Your Guides</div>
+    <h2 class="sec-title">Meet Your Instructors</h2>
+    <p class="sec-sub">Experienced educators who make complex concepts feel simple and fun.</p>
     <div class="instr-grid">
 
-      <div class="instr-card">
+      <div class="instr-card reveal">
         <div class="instr-top">
-          <div class="instr-av" aria-hidden="true">VK</div>
+          <div class="instr-av">VK</div>
           <div class="instr-meta">
             <h4>Vinay Kumari</h4>
             <div class="instr-degree">M.Tech · Electronics Engineering</div>
@@ -648,7 +1055,7 @@ footer{
         <p class="instr-bio">
           12+ years of teaching experience with 5 years specialising in robotics education.
           Brings deep hardware intuition and a patient, hands-on style that makes electronics
-          approachable for every student, regardless of background.
+          approachable for every student.
         </p>
         <div class="instr-chips">
           <span class="chip teal">Robotics</span>
@@ -657,9 +1064,9 @@ footer{
         </div>
       </div>
 
-      <div class="instr-card">
+      <div class="instr-card reveal">
         <div class="instr-top">
-          <div class="instr-av" aria-hidden="true">AK</div>
+          <div class="instr-av">AK</div>
           <div class="instr-meta">
             <h4>Anvay Kawlekar</h4>
             <div class="instr-degree">Masters · Computer Science</div>
@@ -682,33 +1089,34 @@ footer{
 </section>
 
 
-<!-- WHO SHOULD ATTEND -->
+<!-- ══ WHO SHOULD ATTEND ══ -->
 <section class="section" id="who">
   <div class="container">
-    <div class="sec-head">Who Should Attend</div>
+    <div class="sec-label">Eligibility</div>
+    <h2 class="sec-title">Who Should Attend</h2>
     <div class="attend-grid">
-      <div class="attend-item">
-        <div class="attend-tick" aria-hidden="true">✓</div>
+      <div class="attend-item reveal">
+        <div class="attend-tick">✓</div>
         <div class="attend-text">Students aged 13 to 17 years</div>
       </div>
-      <div class="attend-item">
-        <div class="attend-tick" aria-hidden="true">✓</div>
+      <div class="attend-item reveal">
+        <div class="attend-tick">✓</div>
         <div class="attend-text">Zero prior experience needed</div>
       </div>
-      <div class="attend-item">
-        <div class="attend-tick" aria-hidden="true">✓</div>
+      <div class="attend-item reveal">
+        <div class="attend-tick">✓</div>
         <div class="attend-text">Curious about robots &amp; electronics</div>
       </div>
-      <div class="attend-item">
-        <div class="attend-tick" aria-hidden="true">✓</div>
+      <div class="attend-item reveal">
+        <div class="attend-tick">✓</div>
         <div class="attend-text">Interested in coding and technology</div>
       </div>
-      <div class="attend-item">
-        <div class="attend-tick" aria-hidden="true">✓</div>
+      <div class="attend-item reveal">
+        <div class="attend-tick">✓</div>
         <div class="attend-text">Future engineers &amp; makers</div>
       </div>
-      <div class="attend-item">
-        <div class="attend-tick" aria-hidden="true">✓</div>
+      <div class="attend-item reveal">
+        <div class="attend-tick">✓</div>
         <div class="attend-text">STEM school students</div>
       </div>
     </div>
@@ -716,35 +1124,87 @@ footer{
 </section>
 
 
-<!-- REGISTRATION -->
+<!-- ══ PAYMENT SECTION ══ -->
+<section class="payment-section" id="payment">
+  <div class="payment-inner">
+
+    <div class="payment-left">
+      <div class="sec-label">Step 1 — Pay First</div>
+      <h2 class="payment-title">Scan. Pay.<br><em>You're In.</em></h2>
+      <p class="payment-desc">
+        Scan the PhonePe QR code using any UPI app — PhonePe, Google Pay, Paytm, or your bank app.
+        Transfer ₹2,100 to Vinay Kumari, then note your transaction reference number for the registration form.
+      </p>
+      <div class="payment-steps">
+        <div class="pay-step reveal">
+          <div class="pay-step-num">1</div>
+          <div class="pay-step-body">
+            <h5>Open any UPI app</h5>
+            <p>PhonePe, Google Pay, Paytm, BHIM — all work with this QR.</p>
+          </div>
+        </div>
+        <div class="pay-step reveal">
+          <div class="pay-step-num">2</div>
+          <div class="pay-step-body">
+            <h5>Scan the QR &amp; pay ₹2,100</h5>
+            <p>Or transfer directly to <code>8087686629</code> via UPI / WhatsApp Pay.</p>
+          </div>
+        </div>
+        <div class="pay-step reveal">
+          <div class="pay-step-num">3</div>
+          <div class="pay-step-body">
+            <h5>Save your transaction ID</h5>
+            <p>Your UPI app shows a reference number after payment — you'll need this in the form below.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qr-card reveal">
+      <div class="qr-label">Scan to Pay</div>
+      <div class="qr-sublabel">PhonePe · Any UPI App</div>
+      <div class="qr-frame">
+        <img src="payment-qr.jpg" alt="PhonePe payment QR code for Circuit Minds Lab workshop fee" loading="lazy"/>
+      </div>
+      <div class="qr-amount">₹ 2,100</div>
+      <div class="qr-name">Vinay Kumari · PhonePe</div>
+      <div class="qr-note">
+        Also accepted via WhatsApp Pay &amp; all UPI apps<br>
+        UPI number: 80876 86629
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ REGISTRATION FORM ══ -->
 <section class="reg-section" id="register">
   <div class="reg-inner">
 
-    <!-- Left: info -->
     <div class="reg-left">
-      <div class="reg-eyebrow">Step 1 — Pay &nbsp;·&nbsp; Step 2 — Register</div>
-      <h2 class="reg-title">Reserve Your<br><em>Seat Today</em></h2>
+      <div class="sec-label" style="display:block;margin-bottom:12px;">Step 2 — Register</div>
+      <h2 class="reg-title">Complete Your<br><em>Registration</em></h2>
       <p class="reg-desc">
-        Seats are limited to ensure every student gets personal attention.
-        Pay first via UPI or bank transfer, then fill this form with your
-        payment reference number to confirm your spot.
+        Already paid? Fill in your details below. We'll verify your payment reference
+        and send a confirmation within 24 hours.
       </p>
       <div class="reg-meta">
-        <div class="reg-meta-item">
+        <div class="reg-meta-item reveal">
           <div class="reg-meta-icon">📱</div>
           <div>
             <div class="reg-meta-txt">80876 86629</div>
             <div class="reg-meta-sub">WhatsApp · UPI · Call</div>
           </div>
         </div>
-        <div class="reg-meta-item">
+        <div class="reg-meta-item reveal">
           <div class="reg-meta-icon">📅</div>
           <div>
             <div class="reg-meta-txt">20 – 22 May 2026</div>
-            <div class="reg-meta-sub">3-day intensive</div>
+            <div class="reg-meta-sub">3-day workshop</div>
           </div>
         </div>
-        <div class="reg-meta-item">
+        <div class="reg-meta-item reveal">
           <div class="reg-meta-icon">⏰</div>
           <div>
             <div class="reg-meta-txt">4:30 – 6:30 PM daily</div>
@@ -752,145 +1212,132 @@ footer{
           </div>
         </div>
       </div>
-      <div class="fee-pill-hero">
+      <div class="fee-pill reveal">
         ₹ 2,100 <span>· All-inclusive</span>
       </div>
     </div>
 
-    <!-- Right: form -->
-    <!--
-      ═══════════════════════════════════════════════════
-      FORMSPREE SETUP (takes ~2 minutes):
-      1. Sign up free at https://formspree.io
-      2. Create a new form → copy the form ID (e.g. "xabc1234")
-      3. Replace YOUR_FORM_ID in the action attribute below
-      4. You'll get an email for every submission, with the
-         registrant's email set as reply-to for easy follow-up.
-      Free plan: 50 submissions/month.
-
-      ALTERNATIVE — Google Forms:
-      Create a Google Form with matching fields. Responses
-      auto-collect into a Google Sheet (Responses tab → Sheets icon).
-      Then embed the form via <iframe> replacing this <form> block.
-      ═══════════════════════════════════════════════════
-    -->
-    <div class="reg-form">
-      <div class="form-title">Registration Form</div>
-      <p class="form-sub">
-        Please complete your UPI / bank transfer to <strong>80876 86629</strong> first,
-        then fill in the form below. Fields marked <span style="color:var(--gold);font-weight:700;">*</span> are required.
-      </p>
+    <div class="reg-form reveal">
+      <div class="form-header">
+        <div class="form-header-icon">📋</div>
+        <div>
+          <div class="form-title">Registration Form</div>
+          <div class="form-sub-text">Fields marked <strong style="color:var(--gold);">*</strong> are required</div>
+        </div>
+      </div>
 
       <form
         action="https://formspree.io/f/xvzypnyr"
         method="POST"
         id="regForm"
+        enctype="multipart/form-data"
         novalidate
       >
-        <!-- Formspree: sets reply-to as the registrant's email -->
+        <!-- Formspree helpers -->
         <input type="hidden" name="_replyto" id="hidden_replyto"/>
-        <!-- Formspree: redirect back to this page with #thank-you hash -->
         <input type="hidden" name="_next" value="index.html#thank-you"/>
-        <!-- Honeypot anti-spam field -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off"/>
-        <!-- Subject line in notification email -->
         <input type="hidden" name="_subject" value="New Workshop Registration — Circuit Minds Lab"/>
 
         <div class="form-grid">
 
           <div class="form-group">
             <label for="student_name">Student Name <span class="req">*</span></label>
-            <input
-              type="text" id="student_name" name="student_name"
-              placeholder="Full name" required autocomplete="name"
-            />
+            <input type="text" id="student_name" name="student_name"
+              placeholder="Full name" required autocomplete="name"/>
           </div>
 
           <div class="form-group">
-            <label for="student_age">Student Age / Class <span class="req">*</span></label>
-            <input
-              type="text" id="student_age" name="student_age"
-              placeholder="e.g. 15 yrs / Class 10" required
-            />
+            <label for="student_age">Age / Class <span class="req">*</span></label>
+            <input type="text" id="student_age" name="student_age"
+              placeholder="e.g. 15 yrs / Class 10" required/>
           </div>
 
           <div class="form-group">
             <label for="parent_name">Parent / Guardian Name <span class="req">*</span></label>
-            <input
-              type="text" id="parent_name" name="parent_name"
-              placeholder="Full name" required
-            />
+            <input type="text" id="parent_name" name="parent_name"
+              placeholder="Full name" required/>
           </div>
 
           <div class="form-group">
             <label for="phone">Phone Number <span class="req">*</span></label>
-            <input
-              type="tel" id="phone" name="phone"
-              placeholder="10-digit mobile number" required autocomplete="tel"
-              pattern="[0-9\s\-\+]{7,15}"
-            />
+            <input type="tel" id="phone" name="phone"
+              placeholder="10-digit mobile" required autocomplete="tel"
+              pattern="[0-9\s\-\+]{7,15}"/>
           </div>
 
           <div class="form-group full">
             <label for="email">Email Address <span class="req">*</span></label>
-            <input
-              type="email" id="email" name="email"
-              placeholder="you@example.com" required autocomplete="email"
-            />
+            <input type="email" id="email" name="email"
+              placeholder="you@example.com" required autocomplete="email"/>
           </div>
 
           <div class="form-group full">
             <label for="school">School Name</label>
-            <input
-              type="text" id="school" name="school"
-              placeholder="Optional"
-            />
+            <input type="text" id="school" name="school" placeholder="Optional"/>
           </div>
 
-          <hr class="form-divider"/>
+          <div class="form-divider">Payment Details</div>
 
+          <!-- Payment reference number -->
           <div class="form-group full">
-            <label for="payment_ref">Payment Reference Number <span class="req">*</span></label>
-            <input
-              type="text" id="payment_ref" name="payment_reference_number"
-              placeholder="UPI transaction ID or bank reference" required
-            />
-            <div class="helper">
-              Pay <strong>₹ 2,100</strong> first via UPI or bank transfer to
-              <code>80876 86629</code> (WhatsApp / UPI ID). After payment, your UPI app
-              or bank will show a <strong>transaction / reference ID</strong> — enter
-              that here. Your seat is confirmed only after payment is verified.
+            <div class="payment-ref-box">
+              <div class="payment-ref-label">Payment Reference Number <span class="req">*</span></div>
+              <input type="text" id="payment_ref" name="payment_reference_number"
+                placeholder="UPI transaction ID (e.g. 406829371024)" required/>
+              <div class="payment-ref-hint">
+                After paying ₹2,100 via the QR above, your UPI app shows a transaction / reference ID. Enter that number here to confirm your seat.
+              </div>
             </div>
           </div>
 
-          <!-- Thank-you banner — shown via JS when page reloads with #thank-you hash -->
+          <!-- Payment screenshot upload -->
+          <div class="form-group full">
+            <label for="payment_screenshot">Payment Screenshot <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;font-size:10px;">(optional but helpful)</span></label>
+            <label class="file-upload-label" for="payment_screenshot" id="uploadLabel">
+              <div class="file-upload-icon">📎</div>
+              <div class="file-upload-text">
+                <strong>Click to upload</strong> your payment screenshot<br>
+                <span>PNG, JPG up to 5 MB</span>
+              </div>
+            </label>
+            <div class="file-name-display" id="fileNameDisplay"></div>
+            <input type="file" id="payment_screenshot" name="payment_screenshot"
+              accept="image/*,.pdf"/>
+          </div>
+
+          <!-- Thank you banner -->
           <div id="thank-you" role="alert">
+            <span class="thank-you-icon">🎉</span>
             <h3>Registration Received!</h3>
             <p>
-              Thank you for registering. We will verify your payment and send a
-              confirmation within 24 hours. For urgent queries, WhatsApp us at
-              <strong>80876 86629</strong>.
+              Thank you for registering for the Circuit Minds Lab workshop!
+              We'll verify your payment and send a confirmation within 24 hours.<br><br>
+              For any queries, WhatsApp us at <strong>80876 86629</strong>.
             </p>
           </div>
 
           <button type="submit" class="form-submit" id="submitBtn">
-            Submit Registration →
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Submit Registration
           </button>
 
-        </div><!-- /form-grid -->
+        </div>
       </form>
-    </div><!-- /reg-form -->
+    </div>
 
-  </div><!-- /reg-inner -->
+  </div>
 </section>
 
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="foot-inner">
     <div class="foot-brand">Circuit Minds Lab</div>
     <div class="foot-tagline">Inspiring the next generation of engineers &amp; makers</div>
-    <div class="foot-dots" aria-hidden="true">
+    <div class="foot-dots">
       <div class="fd" style="background:#1a9e78;"></div>
       <div class="fd" style="background:#c8880a;"></div>
       <div class="fd" style="background:rgba(255,255,255,0.2);"></div>
@@ -900,26 +1347,39 @@ footer{
 
 
 <script>
-/* Sync _replyto hidden field with the email input */
+/* ── Sync _replyto with email ── */
 document.getElementById('email').addEventListener('input', function(){
   document.getElementById('hidden_replyto').value = this.value;
 });
 
-/* On page load: if URL hash is #thank-you (Formspree redirected back here),
-   show the success banner and hide the submit button. */
+/* ── File upload UX ── */
+document.getElementById('payment_screenshot').addEventListener('change', function(){
+  const label = document.getElementById('uploadLabel');
+  const display = document.getElementById('fileNameDisplay');
+  if(this.files && this.files[0]){
+    const name = this.files[0].name;
+    label.classList.add('has-file');
+    label.querySelector('.file-upload-icon').textContent = '✅';
+    label.querySelector('.file-upload-text').innerHTML =
+      '<strong>' + name + '</strong><br><span>Click to change</span>';
+    display.textContent = name;
+    display.style.display = 'block';
+  }
+});
+
+/* ── Show thank-you banner if redirected back with #thank-you hash ── */
 (function(){
   if(window.location.hash === '#thank-you'){
     const banner = document.getElementById('thank-you');
     const btn    = document.getElementById('submitBtn');
     if(banner){ banner.classList.add('visible'); }
     if(btn)   { btn.style.display = 'none'; }
-    /* Scroll the registration section into view */
     const reg = document.getElementById('register');
     if(reg){ setTimeout(function(){ reg.scrollIntoView({behavior:'smooth'}); }, 100); }
   }
 })();
 
-/* Client-side validation: highlight empty required fields before submitting */
+/* ── Client-side validation ── */
 document.getElementById('regForm').addEventListener('submit', function(e){
   const fields = this.querySelectorAll('[required]');
   let valid = true;
@@ -935,7 +1395,27 @@ document.getElementById('regForm').addEventListener('submit', function(e){
     const first = this.querySelector('[required][style*="e05a3a"]') ||
                   this.querySelector('[required]:invalid');
     if(first){ first.focus(); }
+    return;
   }
+  /* Loading state */
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting…';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+});
+
+/* ── Scroll reveal ── */
+const observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {threshold: 0.12, rootMargin:'0px 0px -40px 0px'});
+
+document.querySelectorAll('.reveal').forEach(function(el){
+  observer.observe(el);
 });
 </script>
 
