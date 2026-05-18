@@ -625,28 +625,6 @@ body{
 .form-group input::placeholder,
 .form-group textarea::placeholder{color:#b0bfbb;}
 
-/* file upload */
-.file-upload-label{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;
-  padding:24px 20px;
-  border:2px dashed #c8ddd8;border-radius:10px;
-  background:#fafcfb;
-  cursor:pointer;
-  transition:border-color 0.2s,background 0.2s;
-  text-align:center;
-}
-.file-upload-label:hover{border-color:var(--teal-mid);background:#f0faf6;}
-.file-upload-label.has-file{border-color:var(--teal-mid);background:#f0faf6;}
-.file-upload-icon{font-size:28px;}
-.file-upload-text{font-size:13px;color:var(--muted);line-height:1.5;}
-.file-upload-text strong{color:var(--teal);font-weight:600;}
-.file-upload-size{font-size:10px;color:#a0b0ab;margin-top:2px;}
-.file-name-display{
-  font-size:11px;color:var(--teal);font-weight:600;
-  margin-top:4px;display:none;
-}
-.form-group input[type="file"]{display:none;}
 
 .payment-ref-box{
   background:linear-gradient(135deg,#f0faf6,#e8f7f1);
@@ -1230,7 +1208,6 @@ footer{
         action="https://formspree.io/f/xvzypnyr"
         method="POST"
         id="regForm"
-        enctype="multipart/form-data"
         novalidate
       >
         <!-- Formspree helpers -->
@@ -1291,21 +1268,6 @@ footer{
             </div>
           </div>
 
-          <!-- Payment screenshot upload -->
-          <div class="form-group full">
-            <label for="payment_screenshot">Payment Screenshot <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;font-size:10px;">(optional but helpful)</span></label>
-            <label class="file-upload-label" for="payment_screenshot" id="uploadLabel">
-              <div class="file-upload-icon">📎</div>
-              <div class="file-upload-text">
-                <strong>Click to upload</strong> your payment screenshot<br>
-                <span>PNG, JPG up to 5 MB</span>
-              </div>
-            </label>
-            <div class="file-name-display" id="fileNameDisplay"></div>
-            <input type="file" id="payment_screenshot" name="payment_screenshot"
-              accept="image/*,.pdf"/>
-          </div>
-
           <!-- Thank you banner -->
           <div id="thank-you" role="alert">
             <span class="thank-you-icon">🎉</span>
@@ -1352,20 +1314,6 @@ document.getElementById('email').addEventListener('input', function(){
   document.getElementById('hidden_replyto').value = this.value;
 });
 
-/* ── File upload UX ── */
-document.getElementById('payment_screenshot').addEventListener('change', function(){
-  const label = document.getElementById('uploadLabel');
-  const display = document.getElementById('fileNameDisplay');
-  if(this.files && this.files[0]){
-    const name = this.files[0].name;
-    label.classList.add('has-file');
-    label.querySelector('.file-upload-icon').textContent = '✅';
-    label.querySelector('.file-upload-text').innerHTML =
-      '<strong>' + name + '</strong><br><span>Click to change</span>';
-    display.textContent = name;
-    display.style.display = 'block';
-  }
-});
 
 /* ── Show thank-you banner if redirected back with #thank-you hash ── */
 (function(){
